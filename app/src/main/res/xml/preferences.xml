@@ -5,11 +5,24 @@
         android:key="setting_sms"
         android:title="SMS settings">
 
+        <!--<EditTextPreference-->
+            <!--android:key="sim_number"-->
+            <!--android:title="Alarm Telephone Number"-->
+            <!--android:dialogTitle="Telephone Number" />-->
+
+        <Preference
+            android:key="contact_pref"
+            android:title="Alarm SIM Number"
+            android:dialogTitle="Pick the alarm contact" />
+
         <EditTextPreference
-            android:key="sim_number"
-            android:title="Alarm Telephon Number"
-            android:dialogTitle="Number"
-            android:defaultValue="+39 "/>
+            android:key="user_passwd"
+            android:title="User Password"
+            android:dialogTitle="User Password" />
+
+
+
+
 
     </PreferenceCategory>
 

@@ -13,36 +13,45 @@
     tools:context="com.example.narko.smsalarm.MainActivity"
     tools:showIn="@layout/app_bar_main">
 
+    <TextView
+        android:text="TextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/tvmain" />
+
     <Button
         android:text="Arm"
+        android:drawableLeft="@drawable/ic_action_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/armBut"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_marginTop="36dp"
+        android:layout_below="@+id/tvmain"
+        android:layout_alignRight="@+id/disarmBut"
+        android:layout_alignEnd="@+id/disarmBut"
+        android:layout_alignLeft="@+id/statusBut"
+        android:layout_alignStart="@+id/statusBut" />
 
     <Button
         android:text="Disarm"
+        android:drawableLeft="@drawable/ic_unlock"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/armBut"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
         android:id="@+id/disarmBut"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_below="@+id/armBut"
+        android:layout_alignLeft="@+id/statusBut"
+        android:layout_alignStart="@+id/statusBut"
+        android:layout_alignRight="@+id/statusBut"
+        android:layout_alignEnd="@+id/statusBut" />
 
     <Button
-        android:text="Status"
+        android:text="   Status"
+        android:drawableLeft="@drawable/ic_info"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/statusBut"
         android:layout_below="@+id/disarmBut"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_centerHorizontal="true" />
 </RelativeLayout>

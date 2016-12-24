@@ -1,10 +1,13 @@
 package com.example.narko.smsalarm;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.telephony.SmsManager;
 import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -16,14 +19,16 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-//    Button armbut = (Button) findViewById(R.id.armBut);
-//    Button disarmBut = (Button) findViewById(R.id.disarmBut);
-//    Button statusBut = (Button) findViewById(R.id.statusBut);
+    Button armbut;
+    Button disarmBut;
+    Button statusBut;
+    TextView tvmain;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,24 +46,57 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+        armbut = (Button) findViewById(R.id.armBut);
+        disarmBut = (Button) findViewById(R.id.disarmBut);
+        statusBut = (Button) findViewById(R.id.statusBut);
 
-        // Functionalities
+        armbut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                sendMessage(Constants.ARM_CODE);
+            }
+        });
 
-//        armbut.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
-//                String sim_number = PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).getString("sim_number", "000");
-//                if (sim_number.equals("000")) {
-//                    Toast.makeText(getApplicationContext(), "Telephone number not valid!", Toast.LENGTH_LONG).show();
-//                } else {
-//                    Toast.makeText(getApplicationContext(), sim_number, Toast.LENGTH_LONG).show();
-//                    // TODO if works
-//                }
-//
-//            }
-//        });
+        disarmBut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                sendMessage(Constants.DISARM_CODE);
+            }
+        });
 
+        statusBut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                sendMessage(Constants.STATUS_CODE);
+            }
+        });
+
+    }
+
+    @Override
+    protected void onPostResume() {
+        super.onPostResume();
+        SharedPreferences sharedPref = getApplicationContext().getSharedPreferences(Constants.PREF_FILE, Context.MODE_PRIVATE);
+        String t = "Central alarm: " + sharedPref.getString(Constants.PREF_ALARMNUMBER, "NOT SET");
+        tvmain = (TextView) findViewById(R.id.tvmain);
+        tvmain.setText(t);
+    }
+
+    private void sendMessage(String code) {
+
+        SharedPreferences sharedPref = getApplicationContext().getSharedPreferences(Constants.PREF_FILE, Context.MODE_PRIVATE);
+
+        //String sim_number = PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).getString("sim_number", "XXXXXX");
+        String sim_number = sharedPref.getString(Constants.PREF_ALARMNUMBER, "");
+        String user_password = PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).getString("user_passwd", "XXXXXX");
+
+        if (sim_number.equals("XXXXXX") || user_password.equals("XXXXXX")) {
+            Toast.makeText(getApplicationContext(), "Telephone number or password not valid!", Toast.LENGTH_LONG).show();
+        } else {
+            Toast.makeText(getApplicationContext(), "Sending code   "+code+"\nTo:   "+sim_number, Toast.LENGTH_LONG).show();
+            SmsManager smsManager = SmsManager.getDefault();
+            smsManager.sendTextMessage(sim_number, null, user_password + code, null, null);
+        }
 
 
     }
