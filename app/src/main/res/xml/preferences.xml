@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory
+        android:key="setting_sms"
+        android:title="SMS settings">
+
+        <EditTextPreference
+            android:key="sim_number"
+            android:title="Alarm Telephon Number"
+            android:dialogTitle="Number"
+            android:defaultValue="+39 "/>
+
+    </PreferenceCategory>
+
+</PreferenceScreen>
